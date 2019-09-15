@@ -12,6 +12,7 @@ import { menuRoutes } from './codelabs/angular/angular-routing.module';
 import { MENU_ROUTES } from './common';
 import { environment } from '../environments/environment';
 import { NotFoundModule } from './components/not-found/not-found.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { NotFoundModule } from './components/not-found/not-found.module';
     LoginModule,
     BrowserModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

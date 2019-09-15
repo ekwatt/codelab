@@ -1,0 +1,57 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z4">
+  <ng-container matColumnDef="comment">
+    <th mat-header-cell *matHeaderCellDef> comment </th>
+    <td class="commentCol" mat-cell *matCellDef="let element"> {{element.comment}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef> name </th>
+    <td class="nameCol" mat-cell *matCellDef="let element"> {{element.name}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="header">
+    <th mat-header-cell *matHeaderCellDef> header </th>
+    <td class="headerCol" mat-cell *matCellDef="let element"><a [routerLink]="'/angular' + element.href">{{
+            clearTags(element.header || 'No header')
+              }}</a>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="href">
+    <th mat-header-cell *matHeaderCellDef> href </th>
+    <td class="hrefCol" mat-cell *matCellDef="let element"> {{element.href}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="timestamp">
+    <th mat-header-cell *matHeaderCellDef> timestamp </th>
+    <td class="timestampCol" mat-cell *matCellDef="let element"> {{element.timestamp|date}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="actions" stickyEnd>
+    <th mat-header-cell *matHeaderCellDef></th>
+    <td class="actionsCol" mat-cell *matCellDef="let element">
+      <button *ngIf="!element.url" mat-icon-button [matMenuTriggerFor]="actionMenu"
+        [matMenuTriggerData]="{message: element}" aria-label="Operations menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <a *ngIf="element.url" mat-icon-button [href]="element.url">
+        <mat-icon>info</mat-icon>
+      </a>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: tableColumns" [ngClass]="{doneRow: row.isDone}"></tr>
+</table>
+
+<mat-menu #actionMenu="matMenu" xPosition="before">
+  <button mat-menu-item (click)="onSelectTake()">Take</button>
+  <button mat-menu-item [matMenuTriggerFor]="closeMenu">Close</button>
+</mat-menu>
+
+<mat-menu #closeMenu="matMenu" xPosition="before">
+  <button mat-menu-item *ngFor="let closeReason of closeReasons"
+    (click)="onSelectCloseReason(closeReason.reason)">Reason:
+    {{closeReason.name}}</button>
+</mat-menu>

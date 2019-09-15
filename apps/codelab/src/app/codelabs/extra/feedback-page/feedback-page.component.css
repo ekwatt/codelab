@@ -1,21 +1,9 @@
 #main {
   overflow: scroll;
-  height: 100%;
+  flex: 1;
+  background: #fafafa;
 }
 
-td {
-  padding: 10px;
-  border-bottom: 1px solid silver;
-}
-
-th {
-  font-size: 20px;
-  width: 25%;
-}
-
-table {
-  text-align: center;
-}
 
 .hidden {
   display: none;
@@ -29,6 +17,7 @@ h2.feedback-header.feedback-header.feedback-header {
   clear: both;
   grid-column: 1/5;
   font-size: 20px;
+  margin-top: 15px;
 }
 
 .card {
@@ -41,12 +30,35 @@ h2.feedback-header.feedback-header.feedback-header {
   grid-gap: 10px;
 }
 
-input {
-  float: right;
+.panel{
+  margin-bottom:10px;
+
 }
 
 .link,
 .link a {
   color: #aaa;
-  font-size: 80%;
+  /* font-size: 80%; */
 }
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+
+.header .matinp {
+  margin-left: 15px;
+  margin-top: 5px;
+  width:120px;
+}
+
+.card-content {
+  overflow: auto
+}
+
+b {
+  background: none;
+}
+
+

@@ -13,6 +13,10 @@ import { CommonModule } from '@angular/common';
 import { SlidesModule } from '@codelab/slides';
 import { environment } from '../../../../environments/environment';
 import { DateRangeComponent } from './date-range/date-range.component';
+import { FeedbackMessageTableComponent } from './feedback-message-table/feedback-message-table.component';
+
+import { MatButtonModule, MatCardModule, MatMenuModule, MatSelectModule, MatTableModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule, MatExpansionModule } from '@angular/material';
+
 
 const routes = RouterModule.forChild(SlidesRoutes.get(FeedbackPageComponent));
 
@@ -30,9 +34,21 @@ export const angularFire = AngularFireModule.initializeApp(
     FormsModule,
     ReactiveFormsModule,
     CommonModule,
-    SlidesModule
+    SlidesModule,
+    MatButtonModule,
+    MatCardModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatTableModule,
+    MatIconModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule, 
+    MatInputModule,
+    MatExpansionModule
+  
   ],
-  declarations: [FeedbackPageComponent, DateRangeComponent],
+  declarations: [FeedbackPageComponent, DateRangeComponent,FeedbackMessageTableComponent],
   exports: [FeedbackPageComponent]
 })
 export class FeedbackPageModule {}

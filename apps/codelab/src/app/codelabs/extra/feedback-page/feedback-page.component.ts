@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { Message } from '@codelab/feedback/src/lib/message';
-import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GithubService } from './github.service';
+import { MatMenuTrigger } from '@angular/material';
 
 type Filter = 'all' | 'done' | 'notDone';
 type Grouping = 'nothing' | 'href' | 'name';
@@ -18,7 +19,7 @@ function groupBy(feedback: Array<Message>, grouping: Grouping) {
     return comment;
   }, {});
 
-  return Object.keys(result).map(key => ({key, value: result[key]}));
+  return Object.keys(result).map(key => ({ key, value: result[key] }));
 }
 
 function normalize(feedback: Array<any>) {
@@ -67,6 +68,8 @@ function filter([feedback, filterName, [fromDate, toDate]]) {
   return result;
 }
 
+
+
 @Component({
   selector: 'codelab-feedback-page',
   templateUrl: './feedback-page.component.html',
@@ -79,6 +82,22 @@ export class FeedbackPageComponent implements OnInit {
   group$ = new BehaviorSubject<Grouping>('href');
   githubAuth;
   private feedback$: AngularFireList<any[]>;
+
+
+  closeReasons = [
+    { name: '[Duplicate]', reason: '[Duplicate]' },
+    { name: '[No fix]', reason: '[No fix]' },
+    { name: '[Done]', reason: '[Done]' },
+    { name: '[Nice message]', reason: '[Nice message, though not a real bug]' },
+    { name: '[Can\'t reproduce]', reason: '[Can\'t reproduce]' }
+  ];
+
+  tableColumns = ['comment', 'name', 'header', 'timestamp', 'actions'];
+  datesForFilter = { dateFrom: undefined, dateTo: undefined }
+
+
+  @ViewChild(MatMenuTrigger, { static: false }) private trigger: MatMenuTrigger;
+
 
   constructor(
     private database: AngularFireDatabase,
@@ -102,7 +121,7 @@ export class FeedbackPageComponent implements OnInit {
   isDone(message) {
     this.database
       .object(`feedback/${message.key}`)
-      .update({isDone: !message.isDone});
+      .update({ isDone: !message.isDone });
   }
 
   generateIssueBody(message) {
@@ -130,7 +149,7 @@ Slide: [Local](http://localhost:4200${
         this.isDone(message);
         this.database
           .object(`feedback/${message.key}`)
-          .update({url: responseData.html_url});
+          .update({ url: responseData.html_url });
         window.open(responseData.html_url);
       });
   }
@@ -153,10 +172,10 @@ Slide: [Local](http://localhost:4200${
         console.log(responseData.html_url);
         this.database
           .object(`feedback/${message.key}`)
-          .update({url: responseData.html_url});
+          .update({ url: responseData.html_url });
         this.ghService
           .closeIssue(
-            {state: 'closed'},
+            { state: 'closed' },
             responseData.number,
             this.githubAuth.credential.accessToken
           )
@@ -175,8 +194,31 @@ Slide: [Local](http://localhost:4200${
       this.filter$,
       this.dateFilter$
     ]).pipe(map(filter));
+
     this.messages$ = combineLatest([filteredMessages$, this.group$]).pipe(
       map(group)
     );
+
   }
+
+  onCloseMessage(e) {
+    console.log('Close', e)
+    //this.createClosedIssue(this.trigger.menuData.message, closeReason);
+  }
+
+  onTakeMessage(e) {
+    console.log('Take', e)
+    //this.createClosedIssue(this.trigger.menuData.message, closeReason);
+  }
+
+
+  onDateChange(clearDates = false) {
+    if (clearDates) {
+      this.datesForFilter.dateFrom = '';
+      this.datesForFilter.dateTo = '';
+    }
+    this.dateFilter$.next([this.datesForFilter.dateFrom || '', this.datesForFilter.dateTo || ''])
+  }
+
+
 }
