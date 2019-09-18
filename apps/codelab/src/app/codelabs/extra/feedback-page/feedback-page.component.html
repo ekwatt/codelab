@@ -46,8 +46,8 @@
               <h3>{{item.key}}</h3>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <codelab-feedback-message-table [dataSource]="item.value" (onClose)="onCloseMessage($event)"
-            (onTake)="onTakeMessage($event)"></codelab-feedback-message-table>
+          <codelab-feedback-message-table [dataSource]="item.value" (close)="onCloseMessage($event)"
+            (take)="onTakeMessage($event)"></codelab-feedback-message-table>
         </mat-expansion-panel>
       </div>
 

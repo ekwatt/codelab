@@ -1,17 +1,18 @@
-<table mat-table [dataSource]="dataSource" class="mat-elevation-z4">
+<table mat-table [dataSource]="_dataSource" matSort class="mat-elevation-z4">
+
   <ng-container matColumnDef="comment">
-    <th mat-header-cell *matHeaderCellDef> comment </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> comment </th>
     <td class="commentCol" mat-cell *matCellDef="let element"> {{element.comment}} </td>
   </ng-container>
 
   <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> name </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header (matSortChange)="reSort($event)">name</th>
     <td class="nameCol" mat-cell *matCellDef="let element"> {{element.name}}
     </td>
   </ng-container>
 
   <ng-container matColumnDef="header">
-    <th mat-header-cell *matHeaderCellDef> header </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> header </th>
     <td class="headerCol" mat-cell *matCellDef="let element"><a [routerLink]="'/angular' + element.href">{{
             clearTags(element.header || 'No header')
               }}</a>
@@ -24,7 +25,7 @@
   </ng-container>
 
   <ng-container matColumnDef="timestamp">
-    <th mat-header-cell *matHeaderCellDef> timestamp </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> timestamp </th>
     <td class="timestampCol" mat-cell *matCellDef="let element"> {{element.timestamp|date}} </td>
   </ng-container>
 

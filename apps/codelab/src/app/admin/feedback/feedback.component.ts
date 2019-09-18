@@ -77,10 +77,10 @@ export class FeedbackComponent implements OnInit {
   messages$: Observable<{ key: string; value: Message }[]>;
   filter$ = new BehaviorSubject<Filter>('notDone');
   dateFilter$ = new BehaviorSubject<[string, string]>(['', '']);
-  group$ = new BehaviorSubject<Grouping>('href');
+  group$ = new BehaviorSubject<Grouping>('nothing');
   githubAuth;
   private feedback$: AngularFireList<any[]>;
-  datesForFilter = { dateFrom: '', dateTo: '' }
+  datesForFilter = { dateFrom: '', dateTo: '' };
 
   constructor(
     private database: AngularFireDatabase,
@@ -185,10 +185,12 @@ Slide: [Local](http://localhost:4200${
   }
 
   onCloseMessage(e) {
+    console.dir(e);
     this.createClosedIssue(e.message, e.reason);
   }
 
   onTakeMessage(e) {
+    console.dir(e);
     this.createAnIssue(e.message);
   }
 
@@ -196,6 +198,6 @@ Slide: [Local](http://localhost:4200${
     if (clearDates) {
       this.datesForFilter = { dateFrom: '', dateTo: '' };
     }
-    this.dateFilter$.next([this.datesForFilter.dateFrom || '', this.datesForFilter.dateTo || ''])
+    this.dateFilter$.next([this.datesForFilter.dateFrom || '', this.datesForFilter.dateTo || '']);
   }
 }

@@ -9,8 +9,8 @@ import { MatMenuTrigger } from '@angular/material';
 })
 export class FeedbackMessageTableComponent implements OnInit {
   @Input() dataSource = [];
-  @Output() onClose = new EventEmitter<{ message: any, reason: string }>();
-  @Output() onTake = new EventEmitter<{ message: any }>();
+  @Output() close = new EventEmitter<{ message: any, reason: string }>();
+  @Output() take = new EventEmitter<{ message: any }>();
 
   @ViewChild(MatMenuTrigger, { static: false }) private trigger: MatMenuTrigger;
 
@@ -32,14 +32,12 @@ export class FeedbackMessageTableComponent implements OnInit {
     return value.replace(/<[^>]+>/g, '').replace(/Angular Codelab \/ /, '');
   }
 
-
   onSelectCloseReason(closeReason) {
-    //console.log('Close', closeReason, this.trigger.menuData.message);
-    this.onClose.emit({message:this.trigger.menuData.message, reason: closeReason})
-    //this.createClosedIssue(this.trigger.menuData.message, closeReason);
+    this.close.emit({ message: this.trigger.menuData.message, reason: closeReason });
   }
+
   onSelectTake() {
-    this.onTake.emit({message:this.trigger.menuData.message});
+    this.take.emit({ message: this.trigger.menuData.message });
   }
 
 }

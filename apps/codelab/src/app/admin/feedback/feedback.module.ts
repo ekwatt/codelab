@@ -9,8 +9,19 @@ import { CommonModule } from '@angular/common';
 import { SlidesModule } from '@codelab/slides';
 import { environment } from '../../../environments/environment';
 import { FeedbackMessageTableComponent } from './feedback-message-table/feedback-message-table.component';
-import { MatButtonModule, MatCardModule, MatMenuModule, MatSelectModule, MatTableModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatInputModule, MatFormFieldModule, MatExpansionModule } from '@angular/material';
 import { FeedbackComponent } from './feedback.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSortModule } from '@angular/material/sort';
+import { MatNativeDateModule } from '@angular/material/core';
 
 export const angularFire = AngularFireModule.initializeApp(
   environment.firebaseConfig
@@ -35,14 +46,14 @@ export const angularFire = AngularFireModule.initializeApp(
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatInputModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSortModule
   ],
   declarations: [FeedbackComponent, FeedbackMessageTableComponent],
   exports: [FeedbackComponent],
   entryComponents: [FeedbackComponent],
 })
 
-export class FeedbackModule {}
-
+export class FeedbackModule { }

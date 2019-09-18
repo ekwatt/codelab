@@ -93,7 +93,7 @@ export class FeedbackPageComponent implements OnInit {
   ];
 
   tableColumns = ['comment', 'name', 'header', 'timestamp', 'actions'];
-  datesForFilter = { dateFrom: undefined, dateTo: undefined }
+  datesForFilter = { dateFrom: undefined, dateTo: undefined };
 
 
   @ViewChild(MatMenuTrigger, { static: false }) private trigger: MatMenuTrigger;
@@ -202,13 +202,13 @@ Slide: [Local](http://localhost:4200${
   }
 
   onCloseMessage(e) {
-    console.log('Close', e)
-    //this.createClosedIssue(this.trigger.menuData.message, closeReason);
+    console.log('Close', e);
+    // this.createClosedIssue(this.trigger.menuData.message, closeReason);
   }
 
   onTakeMessage(e) {
-    console.log('Take', e)
-    //this.createClosedIssue(this.trigger.menuData.message, closeReason);
+    console.log('Take', e);
+    // this.createClosedIssue(this.trigger.menuData.message, closeReason);
   }
 
 
@@ -217,7 +217,7 @@ Slide: [Local](http://localhost:4200${
       this.datesForFilter.dateFrom = '';
       this.datesForFilter.dateTo = '';
     }
-    this.dateFilter$.next([this.datesForFilter.dateFrom || '', this.datesForFilter.dateTo || ''])
+    this.dateFilter$.next([this.datesForFilter.dateFrom || '', this.datesForFilter.dateTo || '']);
   }
 
 
