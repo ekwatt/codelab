@@ -1,13 +1,26 @@
-import { Component, Input, ViewChild, Output, EventEmitter, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+  OnInit,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { MatMenuTrigger } from '@angular/material';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { Message } from '@codelab/feedback/src/lib/message';
 
+const clearTags = (value: string) => value.replace(/<[^>]+>/g, '').replace(/Angular Codelab \/ /, '');
+const clearAllTags = (values: Message[]) =>
+  values.map((m: Message) => ({ ...m, header: clearTags(m.header || 'No header') }))
+
 @Component({
   selector: 'codelab-feedback-message-table',
   templateUrl: './feedback-message-table.html',
-  styleUrls: ['./feedback-message-table.css']
+  styleUrls: ['./feedback-message-table.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FeedbackMessageTableComponent implements OnInit {
   @Output() closeMessage = new EventEmitter<{
@@ -20,7 +33,7 @@ export class FeedbackMessageTableComponent implements OnInit {
 
   @Input('dataSource')
   set dataSource(values: Message[]) {
-    this._dataSource = new MatTableDataSource(values);
+    this._dataSource = new MatTableDataSource(clearAllTags(values));
   }
   _dataSource: MatTableDataSource<Message>;
 
@@ -29,7 +42,7 @@ export class FeedbackMessageTableComponent implements OnInit {
     { name: '[No fix]', reason: '[No fix]' },
     { name: '[Done]', reason: '[Done]' },
     { name: '[Nice message]', reason: '[Nice message, though not a real bug]' },
-    { name: "[Can't reproduce]", reason: "[Can't reproduce]" }
+    { name: '[Can\'t reproduce]', reason: '[Can\'t reproduce]' }
   ];
 
   tableColumns = ['comment', 'name', 'header', 'timestamp', 'actions'];
@@ -44,10 +57,6 @@ export class FeedbackMessageTableComponent implements OnInit {
       }
     };
     this._dataSource.sort = this.sort;
-  }
-
-  clearTags(value: string) {
-    return value.replace(/<[^>]+>/g, '').replace(/Angular Codelab \/ /, '');
   }
 
   onSelectCloseReason(closeReason) {

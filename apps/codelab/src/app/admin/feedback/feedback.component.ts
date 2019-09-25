@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { AngularFireAuth } from '@angular/fire/auth';
-import * as firebase from 'firebase/app';
+import { auth } from 'firebase/app';
 import { Message } from '@codelab/feedback/src/lib/message';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -62,11 +62,13 @@ function filter([feedback, filterName, [fromDate, toDate]]) {
 
   result = result.filter(msg => {
     const timestampMs = new Date(msg.timestamp).getTime();
-    return (fromMs ? timestampMs >= fromMs : true) && (toMs ? timestampMs <= toMs : true);
+    return (
+      (fromMs ? timestampMs >= fromMs : true) &&
+      (toMs ? timestampMs <= toMs : true)
+    );
   });
   return result;
 }
-
 
 @Component({
   selector: 'codelab-feedback',
@@ -97,7 +99,7 @@ export class FeedbackComponent implements OnInit {
   }
 
   async login() {
-    const provider = new firebase.auth.GithubAuthProvider().addScope('repo');
+    const provider = new auth.GithubAuthProvider().addScope('repo');
     this.githubAuth = await this.afAuth.auth.signInWithPopup(provider);
   }
 
@@ -181,16 +183,13 @@ Slide: [Local](http://localhost:4200${
     this.messages$ = combineLatest([filteredMessages$, this.group$]).pipe(
       map(group)
     );
-
   }
 
   onCloseMessage(e) {
-    console.dir(e);
     this.createClosedIssue(e.message, e.reason);
   }
 
   onTakeMessage(e) {
-    console.dir(e);
     this.createAnIssue(e.message);
   }
 
@@ -198,6 +197,9 @@ Slide: [Local](http://localhost:4200${
     if (clearDates) {
       this.datesForFilter = { dateFrom: '', dateTo: '' };
     }
-    this.dateFilter$.next([this.datesForFilter.dateFrom || '', this.datesForFilter.dateTo || '']);
+    this.dateFilter$.next([
+      this.datesForFilter.dateFrom || '',
+      this.datesForFilter.dateTo || ''
+    ]);
   }
 }

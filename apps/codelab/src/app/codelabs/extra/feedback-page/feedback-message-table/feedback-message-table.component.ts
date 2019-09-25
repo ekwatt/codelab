@@ -1,15 +1,21 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { MatMenuTrigger } from '@angular/material';
-
 
 @Component({
   selector: 'codelab-feedback-message-table',
   templateUrl: './feedback-message-table.html',
-  styleUrls: ['./feedback-message-table.css'],
+  styleUrls: ['./feedback-message-table.css']
 })
 export class FeedbackMessageTableComponent implements OnInit {
   @Input() dataSource = [];
-  @Output() close = new EventEmitter<{ message: any, reason: string }>();
+  @Output() close = new EventEmitter<{ message: any; reason: string }>();
   @Output() take = new EventEmitter<{ message: any }>();
 
   @ViewChild(MatMenuTrigger, { static: false }) private trigger: MatMenuTrigger;
@@ -19,25 +25,25 @@ export class FeedbackMessageTableComponent implements OnInit {
     { name: '[No fix]', reason: '[No fix]' },
     { name: '[Done]', reason: '[Done]' },
     { name: '[Nice message]', reason: '[Nice message, though not a real bug]' },
-    { name: '[Can\'t reproduce]', reason: '[Can\'t reproduce]' }
+    { name: "[Can't reproduce]", reason: "[Can't reproduce]" }
   ];
 
   tableColumns = ['comment', 'name', 'header', 'timestamp', 'actions'];
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   clearTags(value: string) {
     return value.replace(/<[^>]+>/g, '').replace(/Angular Codelab \/ /, '');
   }
 
   onSelectCloseReason(closeReason) {
-    this.close.emit({ message: this.trigger.menuData.message, reason: closeReason });
+    this.close.emit({
+      message: this.trigger.menuData.message,
+      reason: closeReason
+    });
   }
 
   onSelectTake() {
     this.take.emit({ message: this.trigger.menuData.message });
   }
-
 }

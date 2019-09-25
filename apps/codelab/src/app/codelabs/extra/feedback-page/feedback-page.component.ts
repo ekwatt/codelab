@@ -63,12 +63,13 @@ function filter([feedback, filterName, [fromDate, toDate]]) {
 
   result = result.filter(msg => {
     const timestampMs = new Date(msg.timestamp).getTime();
-    return (fromMs ? timestampMs >= fromMs : true) && (toMs ? timestampMs <= toMs : true);
+    return (
+      (fromMs ? timestampMs >= fromMs : true) &&
+      (toMs ? timestampMs <= toMs : true)
+    );
   });
   return result;
 }
-
-
 
 @Component({
   selector: 'codelab-feedback-page',
@@ -83,21 +84,18 @@ export class FeedbackPageComponent implements OnInit {
   githubAuth;
   private feedback$: AngularFireList<any[]>;
 
-
   closeReasons = [
     { name: '[Duplicate]', reason: '[Duplicate]' },
     { name: '[No fix]', reason: '[No fix]' },
     { name: '[Done]', reason: '[Done]' },
     { name: '[Nice message]', reason: '[Nice message, though not a real bug]' },
-    { name: '[Can\'t reproduce]', reason: '[Can\'t reproduce]' }
+    { name: "[Can't reproduce]", reason: "[Can't reproduce]" }
   ];
 
   tableColumns = ['comment', 'name', 'header', 'timestamp', 'actions'];
   datesForFilter = { dateFrom: undefined, dateTo: undefined };
 
-
   @ViewChild(MatMenuTrigger, { static: false }) private trigger: MatMenuTrigger;
-
 
   constructor(
     private database: AngularFireDatabase,
@@ -129,7 +127,7 @@ export class FeedbackPageComponent implements OnInit {
 Author: ${message.name}
 Slide: [Local](http://localhost:4200${
       message.href
-      }),[Public](https://angular-presentation.firebaseapp.com${message.href})`;
+    }),[Public](https://angular-presentation.firebaseapp.com${message.href})`;
   }
 
   async createAnIssue(message) {
@@ -198,7 +196,6 @@ Slide: [Local](http://localhost:4200${
     this.messages$ = combineLatest([filteredMessages$, this.group$]).pipe(
       map(group)
     );
-
   }
 
   onCloseMessage(e) {
@@ -211,14 +208,14 @@ Slide: [Local](http://localhost:4200${
     // this.createClosedIssue(this.trigger.menuData.message, closeReason);
   }
 
-
   onDateChange(clearDates = false) {
     if (clearDates) {
       this.datesForFilter.dateFrom = '';
       this.datesForFilter.dateTo = '';
     }
-    this.dateFilter$.next([this.datesForFilter.dateFrom || '', this.datesForFilter.dateTo || '']);
+    this.dateFilter$.next([
+      this.datesForFilter.dateFrom || '',
+      this.datesForFilter.dateTo || ''
+    ]);
   }
-
-
 }

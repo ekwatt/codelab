@@ -1,10 +1,12 @@
 <slide-deck slideShortcuts slidesRouting kirjs-tracking class="content">
   <div no-padding>
-
     <div class="header">
       <mat-form-field class="matinp">
         <mat-label>Feedback</mat-label>
-        <mat-select [value]="filter$ | async" (selectionChange)="this.filter$.next($event.value)">
+        <mat-select
+          [value]="filter$ | async"
+          (selectionChange)="this.filter$.next($event.value)"
+        >
           <mat-option value="all">All</mat-option>
           <mat-option value="done">Done</mat-option>
           <mat-option value="notDone">Undone</mat-option>
@@ -13,7 +15,10 @@
 
       <mat-form-field class="matinp">
         <mat-label>Group by</mat-label>
-        <mat-select [value]="group$ | async" (selectionChange)="group$.next($event.value)">
+        <mat-select
+          [value]="group$ | async"
+          (selectionChange)="group$.next($event.value)"
+        >
           <mat-option value="nothing">Do not group</mat-option>
           <mat-option value="href">Slide URL</mat-option>
           <mat-option value="name">Name</mat-option>
@@ -21,16 +26,31 @@
       </mat-form-field>
 
       <mat-form-field class="matinp">
-        <input matInput #datefrom [matDatepicker]="picker" placeholder="From" [(ngModel)]="datesForFilter.dateFrom"
-          (dateChange)="onDateChange()">
+        <input
+          matInput
+          #datefrom
+          [matDatepicker]="picker"
+          placeholder="From"
+          [(ngModel)]="datesForFilter.dateFrom"
+          (dateChange)="onDateChange()"
+        />
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
 
       <mat-form-field class="matinp">
-        <input matInput #dateto [matDatepicker]="picker2" placeholder="To" [(ngModel)]="datesForFilter.dateTo"
-          (dateChange)="onDateChange()">
-        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <input
+          matInput
+          #dateto
+          [matDatepicker]="picker2"
+          placeholder="To"
+          [(ngModel)]="datesForFilter.dateTo"
+          (dateChange)="onDateChange()"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker2"
+        ></mat-datepicker-toggle>
         <mat-datepicker #picker2></mat-datepicker>
       </mat-form-field>
 
@@ -39,23 +59,19 @@
 
     <div *slide id="main">
       <div *ngFor="let item of (this.messages$ | async)" class="panel">
-
         <mat-expansion-panel [expanded]="true" [hideToggle]="true">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <h3>{{item.key}}</h3>
+              <h3>{{ item.key }}</h3>
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <codelab-feedback-message-table [dataSource]="item.value" (close)="onCloseMessage($event)"
-            (take)="onTakeMessage($event)"></codelab-feedback-message-table>
+          <codelab-feedback-message-table
+            [dataSource]="item.value"
+            (close)="onCloseMessage($event)"
+            (take)="onTakeMessage($event)"
+          ></codelab-feedback-message-table>
         </mat-expansion-panel>
       </div>
-
-
     </div>
-
   </div>
-
-
-
 </slide-deck>

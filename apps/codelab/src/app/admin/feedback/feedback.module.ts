@@ -1,4 +1,3 @@
-import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { NgModule } from '@angular/core';
@@ -7,7 +6,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserWindowModule } from '@codelab/browser';
 import { CommonModule } from '@angular/common';
 import { SlidesModule } from '@codelab/slides';
-import { environment } from '../../../environments/environment';
 import { FeedbackMessageTableComponent } from './feedback-message-table/feedback-message-table.component';
 import { FeedbackComponent } from './feedback.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,17 +21,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSortModule } from '@angular/material/sort';
 import { MatNativeDateModule } from '@angular/material/core';
 
-export const angularFire = AngularFireModule.initializeApp(
-  environment.firebaseConfig
-);
-
 @NgModule({
   imports: [
     RouterModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     BrowserWindowModule,
-    angularFire,
     FormsModule,
     ReactiveFormsModule,
     CommonModule,

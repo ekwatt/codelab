@@ -4,7 +4,6 @@
   background: #fafafa;
 }
 
-
 .hidden {
   display: none;
 }
@@ -30,9 +29,8 @@ h2.feedback-header.feedback-header.feedback-header {
   grid-gap: 10px;
 }
 
-.panel{
-  margin-bottom:10px;
-
+.panel {
+  margin-bottom: 10px;
 }
 
 .link,
@@ -46,19 +44,16 @@ h2.feedback-header.feedback-header.feedback-header {
   flex-direction: column;
 }
 
-
 .header .matinp {
   margin-left: 15px;
   margin-top: 5px;
-  width:120px;
+  width: 120px;
 }
 
 .card-content {
-  overflow: auto
+  overflow: auto;
 }
 
 b {
   background: none;
 }
-
-
